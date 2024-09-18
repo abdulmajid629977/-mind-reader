@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind Reader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+.card {
+    width: 300px;
+    height: auto; /* Allow dynamic height based on content */
+    min-height: 450px; /* Set a minimum height to create space */
+    border-radius: 30px;
+    background: #212121;
+    box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-between; /* Ensure space between content and button */
+}
+
+.form-control {
+    position: relative;
+    width: 100%; /* Ensure input fits well */
+    margin-top: 10px; /* Add margin to position it below the label */
+}
+
+.label {
+    color: #fff;
+    font-size: 0.9rem;
+    margin-bottom: 5px; /* Space between label and input */
+    display: block;
+}
+
+.input {
+    color: #fff;
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+    border-bottom: 2px solid #fff; /* Adjusted border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-border {
+    position: absolute;
+    background: #fff; /* Color of the border */
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0%);
+    transition: transform 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input:focus + .input-border {
+    transform: scaleX(100%);
+}
+
+.input-alt {
+    font-size: 1.2rem;
+    padding-inline: 1em;
+    padding-block: 0.8em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-border-alt {
+    height: 3px;
+    background: linear-gradient(90deg, #ff6464 0%, #ffbf59 50%, #47c9ff 100%);
+    transition: transform 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.input-alt:focus + .input-border-alt {
+    transform: scaleX(100%);
+}
+
+/* Hide spinner controls */
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+/* Button styling */
+.container {
+    position: relative;
+    padding: 3px;
+    background: linear-gradient(90deg, #03a9f4, #f441a5);
+    border-radius: 0.9em;
+    transition: all 0.4s ease;
+    margin-top: 20px; /* Add margin to position it below the input */
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    border-radius: 0.9em;
+    z-index: -10;
+    filter: blur(0);
+    transition: filter 0.4s ease;
+}
+
+.container:hover::before {
+    background: linear-gradient(90deg, #03a9f4, #f441a5);
+    filter: blur(1.2em);
+}
+
+.container:active::before {
+    filter: blur(0.2em);
+}
+
+.button {
+    font-size: 1rem;
+    padding: 0; /* Remove padding */
+    height: 2.5em; /* Set a fixed height */
+    line-height: 2.5em; /* Ensure text is vertically centered */
+    border-radius: 0.5em;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px #000000b4;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #333;
+}
+
+/* Place the Instagram button at the bottom of the card */
+.follow-container {
+    margin-top: auto; /* Push the button to the bottom */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px; /* Space from the card bottom */
+    padding-bottom: 10px; /* Additional padding for better spacing */
+}
+
+/* The existing button styling */
+button {
+    position: relative;
+    width: 130px;
+    height: 35px;
+    border-radius: 30px;
+    background-color: white;
+    border: 1px #FFB700 solid;
+    overflow: hidden;
+}
+
+.text1 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 22%;
+}
+
+.text2 {
+    position: absolute;
+    top: 25%;
+    left: -50px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+}
+
+.icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s;
+}
+
+.icon::before {
+    position: absolute;
+    left: -100px;
+    top: 0;
+    z-index: -1;
+    content: '';
+    width: 130px;
+    height: 33px;
+    border-radius: 30px;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+button:hover .icon {
+    transform: translateX(96px);
+    transition: transform 0.5s;
+}
+
+button:hover .text2 {
+    transform: translateX(100px);
+    transition: transform 0.6s;
+}
+
+button:active {
+    transform: scale(1.03);
+}
+
+    </style>
+</head>
+<body class="bg-black text-white flex items-center justify-center min-h-screen">
+    <div class="card">
+        <h1 class="text-2xl font-bold mb-4 text-center">Mind Reader</h1>
+        <div class="form-control">
+            <label for="numberInput" class="label">Think of a number between 1 and 10:</label>
+            <input required="" type="number" id="numberInput" name="number" class="input input-alt" min="1" max="10" placeholder="Enter your number">
+            <span class="input-border input-border-alt"></span>
+        </div>
+        <div class="container">
+            <button id="readMindButton" class="button">Read my mind</button>
+        </div>
+        
+        <p class="text-xs text-gray-400 mt-4 text-center">Caution: This highly scientific mind reader may cause you to forget how to think. Please use it carefully.</p>
+
+        <div class="mt-4 hidden" id="progressContainer">
+            <p id="statusText" class="text-center text-sm mb-2"></p>
+            <div class="w-full bg-gray-700 rounded-full h-4">
+                <div id="progressBar" class="bg-green-600 h-4 rounded-full transition-all"></div>
+            </div>
+        </div>
+
+        <div id="resultContainer" class="hidden mt-4">
+            <p id="resultText" class="text-center text-xl font-semibold"></p>
+        </div>
+            <!-- Existing elements (e.g., title, input, progress bar) -->
+        
+            <!-- Instagram Follow Button -->
+            <div class="follow-container">
+                <a href="https://www.instagram.com/majid.ar3?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                    <button>
+                        <span class="icon">
+                            <svg height="33" viewBox="0 0 128 128" width="33" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <linearGradient id="a" gradientTransform="matrix(1 0 0 -1 594 633)" gradientUnits="userSpaceOnUse" x1="-566.711" x2="-493.288" y1="516.569" y2="621.43">
+                                    <stop offset="0" stop-color="#ffb900"></stop>
+                                    <stop offset="1" stop-color="#9100eb"></stop>
+                                </linearGradient>
+                                <circle cx="64" cy="64" fill="url(#a)" r="64"></circle>
+                                <g fill="#fff">
+                                    <path d="m82.333 104h-36.666c-11.947 0-21.667-9.719-21.667-21.667v-36.666c0-11.948 9.72-21.667 21.667-21.667h36.666c11.948 0 21.667 9.719 21.667 21.667v36.667c0 11.947-9.719 21.666-21.667 21.666zm-36.666-73.333c-8.271 0-15 6.729-15 15v36.667c0 8.271 6.729 15 15 15h36.666c8.271 0 15-6.729 15-15v-36.667c0-8.271-6.729-15-15-15z"></path>
+                                    <path d="m64 84c-11.028 0-20-8.973-20-20 0-11.029 8.972-20 20-20s20 8.971 20 20c0 11.027-8.972 20-20 20zm0-33.333c-7.352 0-13.333 5.981-13.333 13.333 0 7.353 5.981 13.333 13.333 13.333s13.333-5.98 13.333-13.333c0-7.352-5.98-13.333-13.333-13.333z"></path>
+                                    <circle cx="85.25" cy="42.75" r="4.583"></circle>
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="text1">Follow me</span>
+                        <span class="text2"></span>
+                    </button>
+                </a>
+            </div>
+        </div>        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
